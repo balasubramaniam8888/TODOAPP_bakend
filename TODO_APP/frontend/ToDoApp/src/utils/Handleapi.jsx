@@ -1,71 +1,44 @@
-import axios from 'axios'
+import axios from "axios";
 
+const baseurl = "https://todoapp-bakend.onrender.com";
 
-const baseurl = "https://todoapp-bakend.onrender.com"
+const getallToDo = (setToDo) => {
+  axios.get(baseurl).then(({ data }) => {
+    console.log("data--->", data);
+    setToDo(data);
+  });
+};
 
-
-const getallToDo = (setToDo) =>{
-
-   axios.get(baseurl)
-   .then(({data})=>{
-     console.log("data--->",data);
-     setToDo(data)
-   })
-
-}
-
-
-const addToDo = (text,setText,setToDo ) =>{
-
-    axios.post(`${baseurl}/save`,{text})
+const addToDo = (text, setText, setToDo) => {
+  axios
+    .post(`${baseurl}/save`, { text })
     .then((data) => {
-       console.log(data);
-       setText("")
-       getallToDo(setToDo)
-
+      console.log(data);
+      setText("");
+      getallToDo(setToDo);
     })
-    .catch((err)=>console.log(err))
-}
+    .catch((err) => console.log(err));
+};
 
-const updateToDo = (toDoId,text,setToDo,setText,setIsUpdating ) =>{
-
-    axios.post(`${baseurl}/update`,{_id: toDoId,text})
+const updateToDo = (toDoId, text, setToDo, setText, setIsUpdating) => {
+  axios
+    .post(`${baseurl}/update`, { _id: toDoId, text })
     .then((data) => {
-       console.log(data);
-       setText("")
-       setIsUpdating(false)
-       getallToDo(setToDo)
-
+      console.log(data);
+      setText("");
+      setIsUpdating(false);
+      getallToDo(setToDo);
     })
-    .catch((err)=>console.log(err))
- 
+    .catch((err) => console.log(err));
+};
 
-}
-
-
-
-
-const deleteToDo = (_id,setToDo ) =>{
-
-    axios.post(`${baseurl}/delete`,{_id})
+const deleteToDo = (_id, setToDo) => {
+  axios
+    .post(`${baseurl}/delete`, { _id })
     .then((data) => {
-       getallToDo(setToDo)
-
+      getallToDo(setToDo);
     })
-    .catch((err)=>console.log(err))
- 
+    .catch((err) => console.log(err));
+};
 
-}
-
-
-
-
-
-
-
-
-
-
-
-
-export {getallToDo , addToDo , updateToDo , deleteToDo}
+export { getallToDo, addToDo, updateToDo, deleteToDo };
